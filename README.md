@@ -47,3 +47,5 @@ and add the following code to <Project> section:
 		<NativeLibrary Include="dxguid.lib" />
 	</ItemGroup>
 ```
+
+It is recommended to also place **libHarfBuzzSharp.pdb** in the Native directory.
