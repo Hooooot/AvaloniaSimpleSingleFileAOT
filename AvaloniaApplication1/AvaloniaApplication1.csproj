@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <Platforms>x64</Platforms>
+	  <PublishAot>true</PublishAot>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <AvaloniaResource Include="Assets\**" />
+    <Folder Include="Native\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.1.0" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.0" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.0" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.0" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+  </ItemGroup>
+	
+	<ItemGroup Label="ImportLib"
+			   Condition="'$(PublishAot)' == 'true' and '$(RuntimeIdentifier)' == 'win-x64'">
+		
+		<LinkerArg Include="/LTCG" />
+		
+		<!-- HarfBuzzSharp -->
+		<DirectPInvoke Include="libHarfBuzzSharp" />
+		<NativeLibrary Include="$(MSBuildProjectDirectory)\Native\libHarfBuzzSharp.lib" />
+
+		<!-- SkiaSharp -->
+		<DirectPInvoke Include="libSkiaSharp" />
+		<NativeLibrary Include="$(MSBuildProjectDirectory)\Native\SkiaSharp.lib" />
+		<NativeLibrary Include="$(MSBuildProjectDirectory)\Native\skia.lib" />
+
+		<!-- Avalonia ANGLE/GLES -->
+		<DirectPInvoke Include="av_libglesv2" />
+		<NativeLibrary Include="$(MSBuildProjectDirectory)\Native\libANGLE_static.lib" />
+		<NativeLibrary Include="$(MSBuildProjectDirectory)\Native\libGLESv2_static.lib" />
+
+		<!-- Windows SDK import libraries -->
+		<NativeLibrary Include="Synchronization.lib" />
+		<NativeLibrary Include="Gdi32.lib" />
+		<NativeLibrary Include="DXGI.lib" />
+		<NativeLibrary Include="d3d9.lib" />
+		<NativeLibrary Include="dxguid.lib" />
+	</ItemGroup>
+</Project>
