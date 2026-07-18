@@ -13,6 +13,12 @@ A simple **single-file** Avalonia NativeAOT application that uses static library
 [AvaloniaApplication1.csproj](https://github.com/Hooooot/AvaloniaSimpleSingleFileAOT/blob/master/AvaloniaApplication1/AvaloniaApplication1.csproj)
 
 #### Key Points
+Add the following options to the <PropertyGroup> section:
+```
+<PublishAot>true</PublishAot>
+<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+```
+and add the following code to <Project> section:
 ```xml
     <ItemGroup Label="ImportLib"
 			   Condition="'$(PublishAot)' == 'true' and '$(RuntimeIdentifier)' == 'win-x64'">
